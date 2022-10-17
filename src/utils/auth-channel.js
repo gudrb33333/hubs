@@ -66,7 +66,10 @@ export default class AuthChannel {
       })
     );
 
-    channel.push("auth_request", { email, origin: "hubs" });
+    channel.push("auth_request", { email, origin: "hubs" }).receive("ok", (reply) => {
+      console.log("got reply", reply);
+      window.location.href = reply.url;
+    });
 
     // Returning an object with the authComplete promise since we want the caller to wait for the above await but not
     // for authComplete.
